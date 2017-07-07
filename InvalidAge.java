@@ -1,7 +1,7 @@
 package com.tanu;
 
-class InvalidAge extends Exception{  
-    InvalidAge(String s){  
+class MyRuntimeException extends Exception{  
+	MyRuntimeException(String s){  
      super(s);  
     }  
    }  
