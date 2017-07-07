@@ -3,11 +3,22 @@ package com.tanu;
 public class Person {
 String name;
 int age;
-Person(String name,int age)
+int id;
+Person(int id,String name,int age)
 {
+	this.id=id;
 	this.name=name;
 	this.age=age;
 }
+
+public int getId() {
+	return id;
+}
+
+public void setId(int id) {
+	this.id = id;
+}
+
 public String getName() {
 	return name;
 }
@@ -51,9 +62,10 @@ public boolean equals(Object obj)
 		return false;
 	return true;
 	}
-	public String toString(){
-		StringBuilder sb=new StringBuilder();
-		
-	}
+
+@Override
+public String toString() {
+	return "Person [id=" + id + " name=" + name + ", age=" + age + "]";
+}
 }
 
