@@ -4,12 +4,26 @@ public class Person {
 String name;
 int age;
 int id;
-Person(int id,String name,int age)
+ Gender gender;
+Person(String name, int age, Gender gender)
 {
-	this.id=id;
+	
 	this.name=name;
 	this.age=age;
+//	this.id=id;
+	this.gender=gender;
 }
+
+
+public Gender getGender() {
+	return gender;
+}
+
+
+public void setGender(Gender gender) {
+	this.gender = gender;
+}
+
 
 public int getId() {
 	return id;
@@ -63,9 +77,15 @@ public boolean equals(Object obj)
 	return true;
 	}
 
+
 @Override
 public String toString() {
-	return "Person [id=" + id + " name=" + name + ", age=" + age + "]";
+	return "Person [name=" + name + ", age=" + age + ", gender=" + gender + "]";
 }
+
+
+
+
+
 }
 
