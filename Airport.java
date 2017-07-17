@@ -1,90 +1,87 @@
-package com.tanu;
+package com.tanu.project;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.io.Serializable;
 
-public class Airport {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-	String city_name;
-	String airport_code;
-	String airport_name;
-	public Airport(String city_name, String airport_code, String airport_name) {
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+
+
+@Entity
+@Table
+public class Airport implements Serializable {
+	@Id
+	@Column(name="code")
+	private String code;
+	
+	@Column(name="name", nullable=false)
+	private String name;
+	
+	@Column(name= "city", nullable=false)
+	private String city;
+
+	
+	public Airport(String code, String name, String city) {
 		super();
-		this.city_name = city_name;
-		this.airport_code = airport_code;
-		this.airport_name = airport_name;
-	}
-	public String getCity_name() {
-		return city_name;
-	}
-	public void setCity_name(String city_name) {
-		this.city_name = city_name;
-	}
-	public String getAirport_code() {
-		return airport_code;
-	}
-	public void setAirport_code(String airport_code) {
-		this.airport_code = airport_code;
-	}
-	public String getAirport_name() {
-		return airport_name;
-	}
-	public void setAirport_name(String airport_name) {
-		this.airport_name = airport_name;
+		this.code = code;
+		this.name = name;
+		this.city = city;
 	}
 	
-	public static void main(String args[]) throws IOException, ClassNotFoundException, SQLException
-	{
-		String conString="jdbc:mysql://localhost:4444/mysql";
-		Connection con = DriverManager.getConnection(conString, "root", "root");
-        String query = "Insert into airport values(?,?,?,?)";
-                PreparedStatement st = con.prepareStatement(query);
-                st.executeUpdate(query);        
+	
+	public String getCode() {
+		return code;
+	}
 
 
-try { 
-        BufferedReader bReader = new BufferedReader(new FileReader("airport.csv"));
-        String line = ""; 
-        while ((line = bReader.readLine()) != null) {
-            try {
+	public void setCode(String code) {
+		this.code = code;
+	}
 
-                if (line != null) 
-                {
-                    String[] array = line.split(",+");
-                    for(String result:array)
-                    {
-                        System.out.println(result);
- //Create preparedStatement here and set them and excute them
-                PreparedStatement ps = con.createPreparedStatement(query);
-                 ps.setString(1,);
-                 ps.setString(2,);
-                 ps.setString(3,);
-                
-                 ps.excuteUpdate();
-                 ps. close();
-   //Assuming that your line from file after split will folllow that sequence
 
-                    }
-                } 
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-            finally
-            {
-               if (bReader == null) 
-                {
-                    bReader.close();
-                }
-            }
-        }
-    } catch (FileNotFoundException ex) {
-        ex.printStackTrace();
-    }
-}
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+	public String getCity() {
+		return city;
+	}
+
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+
+	public static Session getSession() {
+		Configuration cfg = new Configuration();
+		cfg.configure("hibernate.cfg.xml");
+		SessionFactory factory = cfg.buildSessionFactory();
+		Session session = factory.openSession();
+		return session;
+
+	}
+	public static void main(String args[]) {
+		Session session = getSession();
+		Transaction t = session.beginTransaction();
+		Query query= session.createSQLQuery("LOAD DATA INFILE :filename INTO TABLE Airport (,price)")
+				.setString("filename", "/path/to/MyFile.csv")
+				.executeUpdate();
+		session.getTransaction().commit();
+		session.close();
+		
+	}
 }
