@@ -1,15 +1,26 @@
-package com.tanu;
+package com.tanu.project;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Consumer;
 
 public class LambdaEx {
-		public static void code(Runnable r)
-		{
-			long start=System.currentTimeMillis();
-			try{
-				r.run();
-			}catch(Exception e){
-				
+
+	public static void main(String args[])
+	{
+		
+		
+		List<Integer> num = Arrays.asList(1,2,3,4,5,6,7,8,9,10);
+		
+		
+		num.forEach(new Consumer<Integer>() {
+			
+			public void accept(Integer t) {
+				System.out.println(t);
 			}
-			start=System.currentTimeMillis()-start;
-			System.out.println("Time taken" + start/1000);
-		}
+		});
+		/*num.forEach((value)->System.out.println(value));*/
+		
+		num.forEach(System.out::println);
+	}
 }
