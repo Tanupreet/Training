@@ -18,7 +18,7 @@ public class StoreData {
 		return session;
 
 	}
-	public static void main(String[] args) {
+/*	public static void main(String[] args) {
 		Session session = getSession();
 		Transaction t = session.beginTransaction();
 		Query query = session.getNamedQuery("@findEmployeeByName");  
@@ -28,7 +28,7 @@ public class StoreData {
 		session.close();
 		
 		System.out.println(list);
-	}
+	}*/
 	
 	
 	
